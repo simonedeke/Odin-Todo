@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#TDContainer {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    min-height: 100vh;
+}
+#SideBar {
+    background-color: lightgray;
+}
+#MainContent {
+    background-color: black;
+}
