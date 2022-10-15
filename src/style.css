@@ -3,14 +3,60 @@
     padding: 0;
 }
 
-#TDContainer {
+.to-do-container {
     display: grid;
     grid-template-columns: 1fr 3fr;
     min-height: 100vh;
 }
-#SideBar {
+.side-bar {
     background-color: lightgray;
+    padding-left:30px;
+    padding-top: 30px;
 }
-#MainContent {
-    background-color: black;
+.to-do-list {
+    background-color: darkgray;
+    padding-top:20px;
 }
+.side-bar__nav {
+    display: grid;
+    list-style-type: none;
+    font-weight: bold;
+    font-size: 18px;
+}
+.side-bar__nav li {
+    padding: 0px 10px 10px 10px;
+}
+.side-bar__nav li:hover {
+    background-color: indigo;
+    color:lightgray;
+}
+.nav-level-two {
+    list-style-type: none;
+    padding-left:20px;
+}
+.to-do-item {
+    display: flex;
+    padding:10px 20px;
+    text-align: center;
+}
+.to-do-item:hover {
+    background-color: indigo;
+    color: white;
+}
+.to-do-item__checked {
+    margin-right:10px;
+}
+.to-do-item__title {
+    margin-right:auto;
+}
+.to-do-item__details {
+    margin-right:10px;
+}
+.to-do-item__due-date {
+    margin-right:10px;
+    width:100px;
+}
+.to-do-item__edit {
+    margin-right:10px;
+}
+
