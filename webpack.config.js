@@ -5,7 +5,8 @@ module.exports = {
     mode: 'development',
     entry: {
       index: './src/index.js',
-      task: './src/task.js',
+      toDoManager: './src/toDoManager.js',
+      domManager: './src/domManager.js',
     },
     plugins: [
       new HtmlWebpackPlugin({

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Output Management</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"><script defer src="index.bundle.js"></script><script defer src="task.bundle.js"></script><script defer src="index.bundle.js"></script><script defer src="task.bundle.js"></script></head>
+  <meta name="viewport" content="width=device-width, initial-scale=1"><script defer src="index.bundle.js"></script><script defer src="index.bundle.js"></script><script defer src="toDoManager.bundle.js"></script><script defer src="domManager.bundle.js"></script></head>
   <body>
     <div class="to-do-container">
       <nav class="side-bar">
@@ -12,17 +12,18 @@
             <li>Today</li>
             <li>Week</li>
             <li>Projects</li>
-            <ul class="nav-level-two">
+            <ul class="projects-container">
               <li>work</li>
               <li>job</li>
               <li>fun</li>
             </ul>
             <li>Notes</li>
         </ul>
+        <div class="add-to-do"></div>
       </nav>
       <div class="to-do-list">
-        <div class="current-selection-title">Home</div>
-        <div class="to-do-item">
+        <div class="current-folder-title">Home</div>
+        <!-- <div class="to-do-item">
           <div class="to-do-item__checked"><input type="checkbox"></div>
           <div class="to-do-item__title">To do task - task to do</div>
           <div class="to-do-item__due-date">October 31st</div>
@@ -30,34 +31,7 @@
           <div class="to-do-item__priority">Priority</div>
           <div class="to-do-item__move-to-folder">Move</div>
           <div class="to-do-item__delete">Delete</div>
-        </div>
-        <div class="to-do-item">
-          <div class="to-do-item__checked"><input type="checkbox"></div>
-          <div class="to-do-item__title">To do task - task to do</div>
-          <div class="to-do-item__due-date">October 31st</div>
-          <div class="to-do-item__edit">Edit</div>
-          <div class="to-do-item__priority">Priority</div>
-          <div class="to-do-item__move-to-folder">Move</div>
-          <div class="to-do-item__delete">Delete</div>
-        </div>
-        <div class="to-do-item">
-          <div class="to-do-item__checked"><input type="checkbox"></div>
-          <div class="to-do-item__title">To do task - task to do</div>
-          <div class="to-do-item__due-date">October 31st</div>
-          <div class="to-do-item__edit">Edit</div>
-          <div class="to-do-item__priority">Priority</div>
-          <div class="to-do-item__move-to-folder">Move</div>
-          <div class="to-do-item__delete">Delete</div>
-        </div>
-        <div class="to-do-item">
-          <div class="to-do-item__checked"><input type="checkbox"></div>
-          <div class="to-do-item__title">To do task - task to do</div>
-          <div class="to-do-item__due-date">October 31st</div>
-          <div class="to-do-item__edit">Edit</div>
-          <div class="to-do-item__priority">Priority</div>
-          <div class="to-do-item__move-to-folder">Move</div>
-          <div class="to-do-item__delete">Delete</div>
-        </div>
+        </div> -->
       </div>
     </div>
   </body>
