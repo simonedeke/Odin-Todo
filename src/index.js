@@ -3,8 +3,6 @@ import { toDoManager } from './toDoManager.js';
 import { domManager } from './domManager.js';
 
 
-
-
 function importAll(r) {
     let images = {};
     r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
@@ -12,10 +10,6 @@ function importAll(r) {
   }
 
 const images = importAll(require.context('./images/', false, /\.(png|svg|jpg|jpeg|gif)$/));
-
-
-const toDoListDisplay = document.querySelector('.to-do-list');
-const navProjectsDisplay = document.querySelector('.projects-container');
 
 const fullToDos = JSON.parse(localStorage.getItem('fullToDos')) || {
     'Home': [],
@@ -45,10 +39,28 @@ if (!localStorage.getItem('fullToDos')) {
     fullToDos['Project 3'].push(toDoManager.createToDo('Project 3 Title', 'Description of proj 3 task 1', '2022-10-31', 'low', 'Project 3', false));
 }
 
-domManager.displayToDos(fullToDos['Home'], toDoListDisplay);
-//domManager.displayNav(fullToDos, navProjectsDisplay);
 
+const toDoListDisplay = document.querySelector('.to-do-list');
+const navProjectsDisplay = document.querySelector('.projects-container');
+const homeNav = document.querySelector('.home-nav');
+const todayNav = document.querySelector('.today-nav');
+const weekNav = document.querySelector('.week-nav');
 
+domManager.displayToDos(fullToDos, toDoListDisplay,true);
+
+console.log("first " + toDoListDisplay);
+domManager.displayNav(fullToDos, navProjectsDisplay, toDoListDisplay);
+// console.log(fullToDos);
+
+homeNav.addEventListener('click', () => {
+    domManager.displayToDos(fullToDos['Home'],toDoListDisplay,true);
+});
+todayNav.addEventListener('click', () => {
+  domManager.displayToDos(fullToDos['Today'],toDoListDisplay,true);
+});
+weekNav.addEventListener('click', () => {
+  domManager.displayToDos(fullToDos['Week'],toDoListDisplay,true);
+});
 
 
 
