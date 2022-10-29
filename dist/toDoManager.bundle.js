@@ -16,7 +16,7 @@
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"toDoManager\": () => (/* binding */ toDoManager)\n/* harmony export */ });\n\nconst toDoManager = (function () {\n\n\n\n    function createToDo(title, description, dueDate, priority, project, complete) {\n        return {\n            title,\n            description,\n            dueDate,\n            priority,\n            project,\n            complete\n        }\n    }\n\n    function editToDo() {\n\n    }\n\n    function deleteToDo() {\n\n    }\n\n    return {\n        createToDo\n    }\n})();\n\n//# sourceURL=webpack://odin-todo/./src/toDoManager.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"toDoManager\": () => (/* binding */ toDoManager)\n/* harmony export */ });\n\nconst toDoManager = (function () {\n\n\n\n    function createToDo(title, description, dueDate, priority, project, complete) {\n        return {\n            title,\n            description,\n            dueDate,\n            priority,\n            project,\n            complete\n        }\n    }\n    function editToDo() {\n\n    }\n    function sortListByDate (list) {\n        list.sort((d1,d2) => new Date(d1.dueDate).getTime() - new Date(d2.dueDate).getTime());\n    }\n    function deleteToDo() {\n\n    }\n\n    return {\n        createToDo,\n        sortListByDate\n    }\n})();\n\n//# sourceURL=webpack://odin-todo/./src/toDoManager.js?");
 
 /***/ })
 

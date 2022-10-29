@@ -23,13 +23,13 @@ const fullToDos = JSON.parse(localStorage.getItem('fullToDos')) || {
 if (!localStorage.getItem('fullToDos')) {
 
     fullToDos['Home'].push(toDoManager.createToDo('Home Title', 'Description of home task 1', '2022-10-31', 'low', 'Home', false));
-    fullToDos['Home'].push(toDoManager.createToDo('Home to do Title 2', 'Description of home task 2', '2022-10-31', 'medium', 'Home', false));
-    fullToDos['Home'].push(toDoManager.createToDo('Home to do Title 3', 'Description of home task 3', '2022-10-31', 'high', 'Home', false));
+    fullToDos['Home'].push(toDoManager.createToDo('Home to do Title 2', 'Description of home task 2', '2022-11-31', 'medium', 'Home', false));
+    fullToDos['Home'].push(toDoManager.createToDo('Home to do Title 3', 'Description of home task 3', '2022-9-31', 'high', 'Home', false));
 
-    fullToDos['Today'].push(toDoManager.createToDo('Today take a shower', 'Description of taking a shower?', '2022-10-31', 'low', 'Today', false));
+    fullToDos['Today'].push(toDoManager.createToDo('Today take a shower', 'Description of taking a shower?', '2022-12-31', 'low', 'Today', false));
     fullToDos['Today'].push(toDoManager.createToDo('Today brush teeth', 'Description of brushing teeth', '2022-10-31', 'low', 'Today', false));
 
-    fullToDos['Week'].push(toDoManager.createToDo('Week Title', 'Description of week task 1', '2022-10-31', 'low', 'Week', false));
+    fullToDos['Week'].push(toDoManager.createToDo('Week Title', 'Description of week task 1', '2022-9-31', 'low', 'Week', false));
     fullToDos['Week'].push(toDoManager.createToDo('Week Title 2', 'Description of week task 2', '2022-10-31', 'low', 'Week', false));
 
     fullToDos['Project 1'].push(toDoManager.createToDo('Project 1 Title', 'Description of proj 1 task 1', '2022-10-31', 'low', 'Project 1', false));
@@ -39,7 +39,9 @@ if (!localStorage.getItem('fullToDos')) {
     fullToDos['Project 3'].push(toDoManager.createToDo('Project 3 Title', 'Description of proj 3 task 1', '2022-10-31', 'low', 'Project 3', false));
 }
 
-
+for(const list in fullToDos) {
+  toDoManager.sortListByDate(fullToDos[list]);
+}
 const toDoListDisplay = document.querySelector('.to-do-list');
 const navProjectsDisplay = document.querySelector('.projects-container');
 const homeNav = document.querySelector('.home-nav');
@@ -53,27 +55,16 @@ domManager.displayNav(fullToDos, navProjectsDisplay, toDoListDisplay);
 // console.log(fullToDos);
 
 homeNav.addEventListener('click', () => {
-    domManager.displayToDos(fullToDos['Home'],toDoListDisplay,true);
+    domManager.setCurrentProject('Home');
+    domManager.displayToDos(fullToDos,toDoListDisplay,true);
 });
 todayNav.addEventListener('click', () => {
+  domManager.setCurrentProject('Today');
   domManager.displayToDos(fullToDos['Today'],toDoListDisplay,true);
 });
 weekNav.addEventListener('click', () => {
+  domManager.setCurrentProject('Week');
   domManager.displayToDos(fullToDos['Week'],toDoListDisplay,true);
 });
 
-
-
-
-{/* <div class='current-folder-title'>Home</div>
-        <div class='add-to-do'><img src='add.png'></div>
-        <div class='to-do-item'>
-          <div class='to-do-item__checked'><input type='checkbox'></div>
-          <div class='to-do-item__title'>To do task - task to do</div>
-          <div class='to-do-item__due-date'>October 31st</div>
-          <div class='to-do-item__edit'>Edit</div>
-          <div class='to-do-item__priority'>Priority</div>
-          <div class='to-do-item__move-to-folder'>Move</div>
-          <div class='to-do-item__delete'>Delete</div>
-        </div> */}
 console.log('hello');
