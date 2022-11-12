@@ -20,16 +20,32 @@
       </nav>
       <div class="to-do-list">
         <div class="current-folder-title">Home</div>
-        <!-- <div class="to-do-item">
-          <div class="to-do-item__checked"><input type="checkbox"></div>
-          <div class="to-do-item__title">To do task - task to do</div>
-          <div class="to-do-item__due-date">October 31st</div>
-          <div class="to-do-item__edit">Edit</div>
-          <div class="to-do-item__priority">Priority</div>
-          <div class="to-do-item__move-to-folder">Move</div>
-          <div class="to-do-item__delete">Delete</div>
-        </div> -->
       </div>
+    </div>
+    <div class="todo-form-container">
+        <form action="" id="editForm">
+            <h1>Edit Item</h1>
+            <label for="title">Title:</label>
+            <input type="text" name="title" id="form-title">
+
+            <label for="description">Description</label>
+            <input type="text" name="description" id="form-description">
+
+            <label for="date">Date:</label>
+            <input type="date" id="form-date" name="date" value="2022-11-11">
+
+            <div class="form-priority-container">
+              <div class="form-priority-title">Priority:</div>
+              <input type="radio" name="priority" id="priority-low" value="low">
+              <label for="priority-low" class="priority-button">Low</label>
+              <input type="radio" name="priority" id="priority-medium" value="medium">
+              <label for="priority-low" class="priority-button">Medium</label>
+              <input type="radio" name="priority" id="priority-high" value="high">
+              <label for="priority-low" class="priority-button">High</label>
+            </div>
+
+            <button id="saveToDo">Save</button>
+        </form>
     </div>
   </body>
 </html>

@@ -1,4 +1,5 @@
 import './style.css';
+import { format } from "date-fns";
 import { toDoManager } from './toDoManager.js';
 import { domManager } from './domManager.js';
 
@@ -22,7 +23,7 @@ const fullToDos = JSON.parse(localStorage.getItem('fullToDos')) || {
 
 if (!localStorage.getItem('fullToDos')) {
 
-    fullToDos['Home'].push(toDoManager.createToDo('Home Title', 'Description of home task 1', '2022-10-31', 'low', 'Home', false));
+    fullToDos['Home'].push(toDoManager.createToDo('Home Title', 'Description of home task 1', '2022-11-30', 'low', 'Home', true));
     fullToDos['Home'].push(toDoManager.createToDo('Home to do Title 2', 'Description of home task 2', '2022-11-31', 'medium', 'Home', false));
     fullToDos['Home'].push(toDoManager.createToDo('Home to do Title 3', 'Description of home task 3', '2022-9-31', 'high', 'Home', false));
 
@@ -48,23 +49,35 @@ const homeNav = document.querySelector('.home-nav');
 const todayNav = document.querySelector('.today-nav');
 const weekNav = document.querySelector('.week-nav');
 
-domManager.displayToDos(fullToDos, toDoListDisplay,true);
+//domManager.displayToDos(fullToDos, toDoListDisplay, images, true);
+for(const toDoList in fullToDos) {
+  domManager.displayToDos(fullToDos[toDoList], toDoListDisplay,images,true);
+}
 
 console.log("first " + toDoListDisplay);
-domManager.displayNav(fullToDos, navProjectsDisplay, toDoListDisplay);
+domManager.displayNav(fullToDos, navProjectsDisplay, toDoListDisplay,images);
 // console.log(fullToDos);
 
 homeNav.addEventListener('click', () => {
-    domManager.setCurrentProject('Home');
-    domManager.displayToDos(fullToDos,toDoListDisplay,true);
+    // domManager.setCurrentProject('Home');
+    for(const toDoList in fullToDos) {
+        domManager.displayToDos(fullToDos[toDoList], toDoListDisplay,images,true);
+        domManager.setCurrentProject('Home');
+    }
+    //domManager.displayToDos(fullToDos,toDoListDisplay,images,true);
 });
 todayNav.addEventListener('click', () => {
   domManager.setCurrentProject('Today');
-  domManager.displayToDos(fullToDos['Today'],toDoListDisplay,true);
+  domManager.displayToDos(fullToDos['Today'],toDoListDisplay,images,true);
 });
 weekNav.addEventListener('click', () => {
   domManager.setCurrentProject('Week');
-  domManager.displayToDos(fullToDos['Week'],toDoListDisplay,true);
+  domManager.displayToDos(fullToDos['Week'],toDoListDisplay,images,true);
 });
+
+
+
+
+
 
 console.log('hello');
