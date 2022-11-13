@@ -79,7 +79,7 @@
 }
 .todo-form-container {
     position: fixed;
-    display:block;
+    display:none;
     width:50%;
     transform: translate(-50%,-50%);
     top:50%;

@@ -13,8 +13,13 @@ export const toDoManager = (function () {
             complete
         }
     }
-    function editToDo(item) {
-        console.log(item);
+    function editToDo(item, title, description, dueDate, priority, project, complete) {
+        item.title = title;
+        item.description = description;
+        item.dueDate = dueDate;
+        item.priority = priority;
+        item.project = project, 
+        item.complete = complete;
     }
     function sortListByDate (list) {
         list.sort((d1,d2) => new Date(d1.dueDate).getTime() - new Date(d2.dueDate).getTime());

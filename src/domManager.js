@@ -1,16 +1,19 @@
-import { format } from "date-fns";
+import { format, parse, parseISO } from "date-fns";
 import { toDoManager } from "./toDoManager";
 
 export const domManager = (function () {
 
     let _currentProject = 'Home';
-    function displayToDos(toDoList, listDisplay, images, clear) {
-        if(clear && (_currentProject != 'Home')){
-            listDisplay.innerHTML = "<div class=\"current-folder-title\">" + _currentProject + "</div>";
+    function displayToDos(fullList, project, listDisplay, images, clear) {
+        if(clear) {
+            listDisplay.innerHTML = "<div class=\"current-folder-title\">" + project + "</div>";
         }
-        
-        // console.log(toDoList);
+        //&& (_currentProject != 'Home'
+        // console.log(fullList);
+        // console.log(project);
+        let toDoList = fullList[project];
         // toDoManager.sortListByDate(toDoList);
+        console.log(toDoList);
         for(const item in toDoList) {
         const container = document.createElement('div');
         container.classList = 'to-do-item';
@@ -40,7 +43,11 @@ export const domManager = (function () {
         
         const dueDateDiv = document.createElement('div');
         dueDateDiv.classList = 'to-do-item__due-date';
-        dueDateDiv.innerHTML = format(new Date((toDoList[item].dueDate).replace(/-/g, '/')), 'MMM d');
+
+        //console.log(toDoList[item].dueDate);
+        //console.log(parse(toDoList[item].dueDate, 'yyyy-MM-dd', new Date()));
+        dueDateDiv.innerHTML = format(parse(toDoList[item].dueDate, 'yyyy-MM-dd', new Date()), 'MMM d');
+
         container.appendChild(dueDateDiv);
 
         const editDiv = document.createElement('div');
@@ -58,11 +65,44 @@ export const domManager = (function () {
             let priorityLow = document.querySelector('#priority-low');
             let priorityMed = document.querySelector('#priority-medium');
             let priorityHigh = document.querySelector('#priority-high');
+            let saveBtn = document.querySelector('#saveToDo');
+            let cancelBtn = document.querySelector('#cancelToDo');
+            let itemRef = document.querySelector("#ref");
+            let prioritySet = "low";
+
+            //console.log(toDoList.name);
 
             title.value = toDoList[item].title;
             description.value = toDoList[item].description;
-            console.log(toDoList[item].dueDate);
             date.value = toDoList[item].dueDate;
+            if(toDoList[item].priority == "low"){
+                priorityLow.checked = true;
+            }
+            else if(toDoList[item].priority == "medium"){
+                priorityMed.checked = true;
+                prioritySet = "medium";
+            }
+            else {
+                priorityHigh.checked = true;
+                prioritySet = "high";
+            }
+
+            saveBtn.addEventListener('click', function handler(e) {
+                if(priorityLow.checked == true){
+                    prioritySet = "low";
+                }
+                else if(priorityMed.checked == true){
+                    prioritySet = "medium";
+                }
+                else {
+                    prioritySet = "high";
+                }
+                toDoManager.editToDo(toDoList[item], title.value, description.value, date.value, prioritySet, toDoList[item].priority, toDoList[item].complete);
+                displayAllToDos(fullList, listDisplay, images);
+                formContainer.style.display = "none";
+                saveBtn.removeEventListener('click',handler);
+            });
+
             
             formContainer.style.display = "block";
         });
@@ -100,6 +140,12 @@ export const domManager = (function () {
             
         }
     }
+    function displayAllToDos(fullList,toDoListDisplay,images) {
+        toDoListDisplay.innerHTML = "<div class=\"current-folder-title\">Home</div>"
+        for(const list in fullList) {
+            displayToDos(fullList, list, toDoListDisplay,images,false);
+          }
+    }
 
     function displayNav(toDoList, projectDisplay, toDoListDisplay,images) {
         
@@ -107,14 +153,14 @@ export const domManager = (function () {
         delete projectList.Home;
         delete projectList.Today;
         delete projectList.Week;
-        console.log(toDoListDisplay);
+        //console.log(toDoListDisplay);
         for(const name in projectList) {
             const projectLI = document.createElement("li");
             projectLI.innerHTML = name;
             console.log('display nav display: ' + toDoListDisplay);
             projectLI.addEventListener('click', () => {
                 domManager.setCurrentProject(name);
-                domManager.displayToDos(toDoList[name],toDoListDisplay,images,true);
+                domManager.displayToDos(toDoList, name, toDoListDisplay,images,true);
             });
             
             projectDisplay.appendChild(projectLI);
@@ -135,6 +181,7 @@ export const domManager = (function () {
 
     return {
         displayToDos,
+        displayAllToDos,
         displayNav,
         getCurrentProject,
         setCurrentProject

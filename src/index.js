@@ -24,13 +24,13 @@ const fullToDos = JSON.parse(localStorage.getItem('fullToDos')) || {
 if (!localStorage.getItem('fullToDos')) {
 
     fullToDos['Home'].push(toDoManager.createToDo('Home Title', 'Description of home task 1', '2022-11-30', 'low', 'Home', true));
-    fullToDos['Home'].push(toDoManager.createToDo('Home to do Title 2', 'Description of home task 2', '2022-11-31', 'medium', 'Home', false));
-    fullToDos['Home'].push(toDoManager.createToDo('Home to do Title 3', 'Description of home task 3', '2022-9-31', 'high', 'Home', false));
+    fullToDos['Home'].push(toDoManager.createToDo('Home to do Title 2', 'Description of home task 2', '2022-11-30', 'medium', 'Home', false));
+    fullToDos['Home'].push(toDoManager.createToDo('Home to do Title 3', 'Description of home task 3', '2022-09-30', 'high', 'Home', false));
 
     fullToDos['Today'].push(toDoManager.createToDo('Today take a shower', 'Description of taking a shower?', '2022-12-31', 'low', 'Today', false));
     fullToDos['Today'].push(toDoManager.createToDo('Today brush teeth', 'Description of brushing teeth', '2022-10-31', 'low', 'Today', false));
 
-    fullToDos['Week'].push(toDoManager.createToDo('Week Title', 'Description of week task 1', '2022-9-31', 'low', 'Week', false));
+    fullToDos['Week'].push(toDoManager.createToDo('Week Title', 'Description of week task 1', '2022-09-30', 'low', 'Week', false));
     fullToDos['Week'].push(toDoManager.createToDo('Week Title 2', 'Description of week task 2', '2022-10-31', 'low', 'Week', false));
 
     fullToDos['Project 1'].push(toDoManager.createToDo('Project 1 Title', 'Description of proj 1 task 1', '2022-10-31', 'low', 'Project 1', false));
@@ -50,9 +50,10 @@ const todayNav = document.querySelector('.today-nav');
 const weekNav = document.querySelector('.week-nav');
 
 //domManager.displayToDos(fullToDos, toDoListDisplay, images, true);
-for(const toDoList in fullToDos) {
-  domManager.displayToDos(fullToDos[toDoList], toDoListDisplay,images,true);
-}
+// for(const toDoList in fullToDos) {
+//   domManager.displayToDos(fullToDos[toDoList], toDoListDisplay,images,false);
+// }
+domManager.displayAllToDos(fullToDos,toDoListDisplay,images);
 
 console.log("first " + toDoListDisplay);
 domManager.displayNav(fullToDos, navProjectsDisplay, toDoListDisplay,images);
@@ -60,19 +61,21 @@ domManager.displayNav(fullToDos, navProjectsDisplay, toDoListDisplay,images);
 
 homeNav.addEventListener('click', () => {
     // domManager.setCurrentProject('Home');
-    for(const toDoList in fullToDos) {
-        domManager.displayToDos(fullToDos[toDoList], toDoListDisplay,images,true);
-        domManager.setCurrentProject('Home');
-    }
+    toDoListDisplay.innerHTML = "<div class=\"current-folder-title\">Home</div>";
+    // for(const toDoList in fullToDos) {
+    //   //domManager.setCurrentProject('Home');  
+    //   domManager.displayToDos(fullToDos[toDoList], toDoListDisplay,images,false);
+    // }
+    domManager.displayAllToDos(fullToDos,toDoListDisplay,images);
     //domManager.displayToDos(fullToDos,toDoListDisplay,images,true);
 });
 todayNav.addEventListener('click', () => {
-  domManager.setCurrentProject('Today');
-  domManager.displayToDos(fullToDos['Today'],toDoListDisplay,images,true);
+  // domManager.setCurrentProject('Today');
+  domManager.displayToDos(fullToDos, 'Today',toDoListDisplay,images,true);
 });
 weekNav.addEventListener('click', () => {
-  domManager.setCurrentProject('Week');
-  domManager.displayToDos(fullToDos['Week'],toDoListDisplay,images,true);
+  // domManager.setCurrentProject('Week');
+  domManager.displayToDos(fullToDos, 'Week',toDoListDisplay,images,true);
 });
 
 
