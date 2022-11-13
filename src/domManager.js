@@ -97,8 +97,13 @@ export const domManager = (function () {
                 else {
                     prioritySet = "high";
                 }
-                toDoManager.editToDo(toDoList[item], title.value, description.value, date.value, prioritySet, toDoList[item].priority, toDoList[item].complete);
-                displayAllToDos(fullList, listDisplay, images);
+                toDoManager.editToDo(toDoList[item], title.value, description.value, date.value, prioritySet, toDoList[item].project, toDoList[item].complete);
+                if(document.querySelector('.current-folder-title').innerHTML == 'Home'){
+                    displayAllToDos(fullList, listDisplay, images);
+                }
+                else {
+                    displayToDos(fullList, toDoList[item].project, listDisplay,images, true);
+                }
                 formContainer.style.display = "none";
                 saveBtn.removeEventListener('click',handler);
             });
