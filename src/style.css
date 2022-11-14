@@ -92,3 +92,26 @@
     padding:50px;
     display: grid;
 }
+#addButton {
+    background-color: transparent;
+}
+.add-to-do {
+    border-radius: 50%;
+    background-color: black;
+    color: white;
+    bottom: 30px;
+    display: flex;
+    left: 30px;
+    position: fixed;
+    height: 75px;
+    width: 75px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 60px;
+}
+
+#addImage {
+    height:75px;
+    width:75px;
+}

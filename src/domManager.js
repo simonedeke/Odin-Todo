@@ -1,4 +1,5 @@
 import { format, parse, parseISO } from "date-fns";
+import { it } from "date-fns/locale";
 import { toDoManager } from "./toDoManager";
 
 export const domManager = (function () {
@@ -65,9 +66,9 @@ export const domManager = (function () {
             let priorityLow = document.querySelector('#priority-low');
             let priorityMed = document.querySelector('#priority-medium');
             let priorityHigh = document.querySelector('#priority-high');
+            let project = document.querySelector('#form-project');
             let saveBtn = document.querySelector('#saveToDo');
             let cancelBtn = document.querySelector('#cancelToDo');
-            let itemRef = document.querySelector("#ref");
             let prioritySet = "low";
 
             //console.log(toDoList.name);
@@ -75,6 +76,7 @@ export const domManager = (function () {
             title.value = toDoList[item].title;
             description.value = toDoList[item].description;
             date.value = toDoList[item].dueDate;
+            
             if(toDoList[item].priority == "low"){
                 priorityLow.checked = true;
             }
@@ -86,6 +88,7 @@ export const domManager = (function () {
                 priorityHigh.checked = true;
                 prioritySet = "high";
             }
+            project.value = toDoList[item].project;
 
             saveBtn.addEventListener('click', function handler(e) {
                 if(priorityLow.checked == true){
@@ -97,14 +100,23 @@ export const domManager = (function () {
                 else {
                     prioritySet = "high";
                 }
-                toDoManager.editToDo(toDoList[item], title.value, description.value, date.value, prioritySet, toDoList[item].project, toDoList[item].complete);
+                if(toDoList[item].project != project.value){
+                    console.log("project change");
+                    fullList[project.value].push(toDoManager.createToDo(title.value, description.value, date.value, prioritySet, project.value, toDoList[item].complete));
+                    toDoManager.deleteToDo(toDoList, toDoList[item]);
+                }
+                else {
+                    toDoManager.editToDo(toDoList[item], title.value, description.value, date.value, prioritySet, project.value, toDoList[item].complete);
+                }
+                
                 if(document.querySelector('.current-folder-title').innerHTML == 'Home'){
                     displayAllToDos(fullList, listDisplay, images);
                 }
                 else {
-                    displayToDos(fullList, toDoList[item].project, listDisplay,images, true);
+                    displayToDos(fullList, project.value, listDisplay,images, true);
                 }
                 formContainer.style.display = "none";
+                resetForm();
                 saveBtn.removeEventListener('click',handler);
             });
 
@@ -152,6 +164,27 @@ export const domManager = (function () {
           }
     }
 
+    function resetForm() {
+        let formContainer = document.querySelector('.todo-form-container');
+        let form = document.querySelector('#editForm');
+        let title = document.querySelector('#form-title');
+        let description = document.querySelector('#form-description');
+        let date = document.querySelector('#form-date');
+        let priorityLow = document.querySelector('#priority-low');
+        let project = document.querySelector('#form-project');
+        let priorityMed = document.querySelector('#priority-medium');
+        let priorityHigh = document.querySelector('#priority-high');
+        let saveBtn = document.querySelector('#saveToDo');
+        let cancelBtn = document.querySelector('#cancelToDo');
+        let prioritySet = "low";
+
+        title.value = "";
+        description.value = "";
+        date.value = format(new Date(), "yyyy-MM-dd");
+        priorityLow.checked = true;
+        project.value = 'Home';
+    }
+
     function displayNav(toDoList, projectDisplay, toDoListDisplay,images) {
         
         const projectList = Object.assign({}, toDoList);
@@ -172,6 +205,15 @@ export const domManager = (function () {
         }
         
     }
+    function fillSelectProject(fullList) {
+        let project = document.querySelector('#form-project');
+        for(const name in fullList) {
+            let option = document.createElement("option");
+            option.value = name;
+            option.textContent = name;
+            project.appendChild(option);
+        }
+    }
     function setCurrentProject(project) {
         _currentProject = project;
     }
@@ -188,6 +230,7 @@ export const domManager = (function () {
         displayToDos,
         displayAllToDos,
         displayNav,
+        fillSelectProject,
         getCurrentProject,
         setCurrentProject
     }

@@ -48,6 +48,8 @@ const navProjectsDisplay = document.querySelector('.projects-container');
 const homeNav = document.querySelector('.home-nav');
 const todayNav = document.querySelector('.today-nav');
 const weekNav = document.querySelector('.week-nav');
+const addDiv = document.querySelector(".add-to-do");
+
 
 //domManager.displayToDos(fullToDos, toDoListDisplay, images, true);
 // for(const toDoList in fullToDos) {
@@ -58,6 +60,7 @@ domManager.displayAllToDos(fullToDos,toDoListDisplay,images);
 console.log("first " + toDoListDisplay);
 domManager.displayNav(fullToDos, navProjectsDisplay, toDoListDisplay,images);
 // console.log(fullToDos);
+domManager.fillSelectProject(fullToDos);
 
 homeNav.addEventListener('click', () => {
     // domManager.setCurrentProject('Home');
@@ -78,9 +81,53 @@ weekNav.addEventListener('click', () => {
   domManager.displayToDos(fullToDos, 'Week',toDoListDisplay,images,true);
 });
 
+addDiv.addEventListener('click', function handler() {
+    console.log("add");
+    let formContainer = document.querySelector('.todo-form-container');
+    let form = document.querySelector('#editForm');
+    let title = document.querySelector('#form-title');
+    let description = document.querySelector('#form-description');
+    let date = document.querySelector('#form-date');
+    let priorityLow = document.querySelector('#priority-low');
+    let priorityMed = document.querySelector('#priority-medium');
+    let priorityHigh = document.querySelector('#priority-high');
+    
+    let saveBtn = document.querySelector('#saveToDo');
+    let cancelBtn = document.querySelector('#cancelToDo');
+    let prioritySet = "low";
+
+    formContainer.style.display = "block";
+
+    saveBtn.innerHTML = "Create New";
+    
+    saveBtn.addEventListener('click', (e) => {
+      if(priorityLow.checked == true){
+        prioritySet = "low";
+      }
+      else if(priorityMed.checked == true){
+        prioritySet = "medium";
+      }
+      else {
+        prioritySet = "high";
+      }
+      //toDoManager.editToDo(toDoList[item], title.value, description.value, date.value, prioritySet, toDoList[item].project, toDoList[item].complete);
+      if(document.querySelector('.current-folder-title').innerHTML == 'Home'){
+        //displayAllToDos(fullList, listDisplay, images);
+      }
+      else {
+        //displayToDos(fullList, toDoList[item].project, listDisplay,images, true);
+      }
+      formContainer.style.display = "none";
+      resetForm();
+      addDiv.removeEventListener('click',handler);
+    });
+
+
+})
 
 
 
 
 
-console.log('hello');
+
+console.log('end of index.js');

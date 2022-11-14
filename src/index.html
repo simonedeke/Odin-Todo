@@ -16,7 +16,7 @@
             </ul>
             <li>Notes</li>
         </ul>
-        <div class="add-to-do"></div>
+        <div class="add-to-do">+</div>
       </nav>
       <div class="to-do-list">
         <div class="current-folder-title">Home</div>
@@ -28,7 +28,7 @@
             <label for="title">Title:</label>
             <input type="text" name="title" id="form-title">
 
-            <label for="description">Description</label>
+            <label for="description">Description:</label>
             <input type="text" name="description" id="form-description">
 
             <label for="date">Date:</label>
@@ -44,9 +44,10 @@
               <label for="priority-low" class="priority-button">High</label>
             </div>
 
+            <label for="project">Project:</label>
+            <select name="project" id="form-project"></select>
             <button type="button" id="saveToDo">Save</button>
             <button type="button" id="cancelToDo">Cancel</button>
-            <input type="hidden" id="ref">
         </form>
     </div>
   </body>
