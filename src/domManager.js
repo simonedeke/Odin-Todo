@@ -67,12 +67,13 @@ export const domManager = (function () {
             let priorityMed = document.querySelector('#priority-medium');
             let priorityHigh = document.querySelector('#priority-high');
             let project = document.querySelector('#form-project');
+            let complete = document.querySelector('#form-complete');
             let saveBtn = document.querySelector('#saveToDo');
             let cancelBtn = document.querySelector('#cancelToDo');
             let prioritySet = "low";
 
             //console.log(toDoList.name);
-
+            saveBtn.innerHTML = "Save";
             title.value = toDoList[item].title;
             description.value = toDoList[item].description;
             date.value = toDoList[item].dueDate;
@@ -89,6 +90,7 @@ export const domManager = (function () {
                 prioritySet = "high";
             }
             project.value = toDoList[item].project;
+            complete.checked = toDoList[item].complete;
 
             saveBtn.addEventListener('click', function handler(e) {
                 if(priorityLow.checked == true){
@@ -102,11 +104,11 @@ export const domManager = (function () {
                 }
                 if(toDoList[item].project != project.value){
                     console.log("project change");
-                    fullList[project.value].push(toDoManager.createToDo(title.value, description.value, date.value, prioritySet, project.value, toDoList[item].complete));
+                    fullList[project.value].push(toDoManager.createToDo(title.value, description.value, date.value, prioritySet, project.value, complete.checked));
                     toDoManager.deleteToDo(toDoList, toDoList[item]);
                 }
                 else {
-                    toDoManager.editToDo(toDoList[item], title.value, description.value, date.value, prioritySet, project.value, toDoList[item].complete);
+                    toDoManager.editToDo(toDoList[item], title.value, description.value, date.value, prioritySet, project.value, complete.checked);
                 }
                 
                 if(document.querySelector('.current-folder-title').innerHTML == 'Home'){
@@ -146,7 +148,12 @@ export const domManager = (function () {
 
         deleteDiv.addEventListener('click', (e) => {
             toDoManager.deleteToDo(toDoList, item);
-            listDisplay.removeChild(container);
+            if(document.querySelector('.current-folder-title').innerHTML == 'Home'){
+                displayAllToDos(fullList, listDisplay, images);
+            }
+            else {
+                displayToDos(fullList, document.querySelector('.current-folder-title').innerHTML, listDisplay,images, true);
+            }
         });
 
         deleteDiv.appendChild(deleteIMG);
@@ -174,6 +181,7 @@ export const domManager = (function () {
         let project = document.querySelector('#form-project');
         let priorityMed = document.querySelector('#priority-medium');
         let priorityHigh = document.querySelector('#priority-high');
+        let complete = document.querySelector('#form-complete');
         let saveBtn = document.querySelector('#saveToDo');
         let cancelBtn = document.querySelector('#cancelToDo');
         let prioritySet = "low";
@@ -183,6 +191,8 @@ export const domManager = (function () {
         date.value = format(new Date(), "yyyy-MM-dd");
         priorityLow.checked = true;
         project.value = 'Home';
+        complete.checked = false;
+
     }
 
     function displayNav(toDoList, projectDisplay, toDoListDisplay,images) {
@@ -229,6 +239,7 @@ export const domManager = (function () {
     return {
         displayToDos,
         displayAllToDos,
+        resetForm,
         displayNav,
         fillSelectProject,
         getCurrentProject,

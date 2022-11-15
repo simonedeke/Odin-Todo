@@ -49,6 +49,7 @@ const homeNav = document.querySelector('.home-nav');
 const todayNav = document.querySelector('.today-nav');
 const weekNav = document.querySelector('.week-nav');
 const addDiv = document.querySelector(".add-to-do");
+const cancelBtn = document.querySelector("#cancelToDo");
 
 
 //domManager.displayToDos(fullToDos, toDoListDisplay, images, true);
@@ -81,6 +82,13 @@ weekNav.addEventListener('click', () => {
   domManager.displayToDos(fullToDos, 'Week',toDoListDisplay,images,true);
 });
 
+cancelBtn.addEventListener('click', () => {
+    let formContainer = document.querySelector('.todo-form-container');  
+    formContainer.style.display = "none";
+    domManager.resetForm();
+
+});
+
 addDiv.addEventListener('click', function handler() {
     console.log("add");
     let formContainer = document.querySelector('.todo-form-container');
@@ -91,7 +99,8 @@ addDiv.addEventListener('click', function handler() {
     let priorityLow = document.querySelector('#priority-low');
     let priorityMed = document.querySelector('#priority-medium');
     let priorityHigh = document.querySelector('#priority-high');
-    
+    let project = document.querySelector('#form-project');
+    let complete = document.querySelector('#form-complete');
     let saveBtn = document.querySelector('#saveToDo');
     let cancelBtn = document.querySelector('#cancelToDo');
     let prioritySet = "low";
@@ -100,7 +109,8 @@ addDiv.addEventListener('click', function handler() {
 
     saveBtn.innerHTML = "Create New";
     
-    saveBtn.addEventListener('click', (e) => {
+    saveBtn.addEventListener('click', function handler(e) {
+      console.log("adding");
       if(priorityLow.checked == true){
         prioritySet = "low";
       }
@@ -110,16 +120,18 @@ addDiv.addEventListener('click', function handler() {
       else {
         prioritySet = "high";
       }
+      fullToDos[project.value].push(toDoManager.createToDo(title.value, description.value, date.value, prioritySet, project.value, complete.checked));
       //toDoManager.editToDo(toDoList[item], title.value, description.value, date.value, prioritySet, toDoList[item].project, toDoList[item].complete);
+      
       if(document.querySelector('.current-folder-title').innerHTML == 'Home'){
-        //displayAllToDos(fullList, listDisplay, images);
+        domManager.displayAllToDos(fullToDos, toDoListDisplay, images);
       }
       else {
-        //displayToDos(fullList, toDoList[item].project, listDisplay,images, true);
+        domManager.displayToDos(fullToDos, project.value, toDoListDisplay, images, true);
       }
       formContainer.style.display = "none";
-      resetForm();
-      addDiv.removeEventListener('click',handler);
+      domManager.resetForm();
+      saveBtn.removeEventListener('click',handler);
     });
 
 
