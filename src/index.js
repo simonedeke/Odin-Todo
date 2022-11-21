@@ -3,23 +3,22 @@ import { format } from "date-fns";
 import { toDoManager } from './toDoManager.js';
 import { domManager } from './domManager.js';
 
-
 function importAll(r) {
-    let images = {};
-    r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
-    return images;
-  }
+  const images = {};
+  r.keys().map((item) => { images[item.replace('./', '')] = r(item); });
+  return images;
+}
 
 const images = importAll(require.context('./images/', false, /\.(png|svg|jpg|jpeg|gif)$/));
 
 const fullToDos = JSON.parse(localStorage.getItem('fullToDos')) || {
-    'Home': [],
-    'Today': [],
-    'Week': [],
-    'Project 1':[],
-    'Project 2':[],
-    'Project 3':[]                                              
-    }
+  Home: [],
+  Today: [],
+  Week: [],
+  'Project 1': [],
+  'Project 2': [],
+  'Project 3': [],
+};
 
 if (!localStorage.getItem('fullToDos')) {
 
@@ -50,6 +49,7 @@ const todayNav = document.querySelector('.today-nav');
 const weekNav = document.querySelector('.week-nav');
 const addDiv = document.querySelector(".add-to-do");
 const cancelBtn = document.querySelector("#cancelToDo");
+const titleInput = document.querySelector("#form-title");
 
 
 //domManager.displayToDos(fullToDos, toDoListDisplay, images, true);
@@ -94,6 +94,7 @@ addDiv.addEventListener('click', function handler() {
     let formContainer = document.querySelector('.todo-form-container');
     let form = document.querySelector('#editForm');
     let title = document.querySelector('#form-title');
+    let titleError = document.querySelector("#form-title + span.error");
     let description = document.querySelector('#form-description');
     let date = document.querySelector('#form-date');
     let priorityLow = document.querySelector('#priority-low');
@@ -108,34 +109,49 @@ addDiv.addEventListener('click', function handler() {
     formContainer.style.display = "block";
 
     saveBtn.innerHTML = "Create New";
-    
+    //console.log(form.checkValidity());
     saveBtn.addEventListener('click', function handler(e) {
       console.log("adding");
-      if(priorityLow.checked == true){
-        prioritySet = "low";
-      }
-      else if(priorityMed.checked == true){
-        prioritySet = "medium";
+      console.log("form valid: " + form.checkValidity());
+      if(form.checkValidity()){
+        if(priorityLow.checked == true){
+          prioritySet = "low";
+        }
+        else if(priorityMed.checked == true){
+          prioritySet = "medium";
+        }
+        else {
+          prioritySet = "high";
+        }
+        fullToDos[project.value].push(toDoManager.createToDo(title.value, description.value, date.value, prioritySet, project.value, complete.checked));
+        //toDoManager.editToDo(toDoList[item], title.value, description.value, date.value, prioritySet, toDoList[item].project, toDoList[item].complete);
+        
+        if(document.querySelector('.current-folder-title').innerHTML == 'Home'){
+          domManager.displayAllToDos(fullToDos, toDoListDisplay, images);
+        }
+        else {
+          domManager.displayToDos(fullToDos, project.value, toDoListDisplay, images, true);
+        }
+        formContainer.style.display = "none";
+        domManager.resetForm();
+        saveBtn.removeEventListener('click',handler);
       }
       else {
-        prioritySet = "high";
+        console.log("invalid");
+        domManager.showError();
+        //titleError.textContent = "Title is a required field"
       }
-      fullToDos[project.value].push(toDoManager.createToDo(title.value, description.value, date.value, prioritySet, project.value, complete.checked));
-      //toDoManager.editToDo(toDoList[item], title.value, description.value, date.value, prioritySet, toDoList[item].project, toDoList[item].complete);
       
-      if(document.querySelector('.current-folder-title').innerHTML == 'Home'){
-        domManager.displayAllToDos(fullToDos, toDoListDisplay, images);
-      }
-      else {
-        domManager.displayToDos(fullToDos, project.value, toDoListDisplay, images, true);
-      }
-      formContainer.style.display = "none";
-      domManager.resetForm();
-      saveBtn.removeEventListener('click',handler);
     });
 
 
 })
+
+// titleInput.addEventListener('input', (event) => {
+//     if(titleInput.validity){
+
+//     }
+// });
 
 
 

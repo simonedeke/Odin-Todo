@@ -59,7 +59,6 @@ export const domManager = (function () {
         editBtn.innerHTML = "Edit";
         editBtn.addEventListener('click', (e) => {
             let formContainer = document.querySelector('.todo-form-container');
-            let form = document.querySelector('#editForm');
             let title = document.querySelector('#form-title');
             let description = document.querySelector('#form-description');
             let date = document.querySelector('#form-date');
@@ -93,33 +92,40 @@ export const domManager = (function () {
             complete.checked = toDoList[item].complete;
 
             saveBtn.addEventListener('click', function handler(e) {
-                if(priorityLow.checked == true){
-                    prioritySet = "low";
-                }
-                else if(priorityMed.checked == true){
-                    prioritySet = "medium";
+                let form = document.querySelector('#editForm');
+                if(form.checkValidity()){
+                    if(priorityLow.checked == true){
+                        prioritySet = "low";
+                    }
+                    else if(priorityMed.checked == true){
+                        prioritySet = "medium";
+                    }
+                    else {
+                        prioritySet = "high";
+                    }
+                    if(toDoList[item].project != project.value){
+                        console.log("project change");
+                        fullList[project.value].push(toDoManager.createToDo(title.value, description.value, date.value, prioritySet, project.value, complete.checked));
+                        toDoManager.deleteToDo(toDoList, toDoList[item]);
+                    }
+                    else {
+                        toDoManager.editToDo(toDoList[item], title.value, description.value, date.value, prioritySet, project.value, complete.checked);
+                    }
+                    
+                    if(document.querySelector('.current-folder-title').innerHTML == 'Home'){
+                        displayAllToDos(fullList, listDisplay, images);
+                    }
+                    else {
+                        displayToDos(fullList, project.value, listDisplay,images, true);
+                    }
+                    formContainer.style.display = "none";
+                    resetForm();
+                    saveBtn.removeEventListener('click',handler);
                 }
                 else {
-                    prioritySet = "high";
+                    console.log("edit invalid");
+                    showError();
                 }
-                if(toDoList[item].project != project.value){
-                    console.log("project change");
-                    fullList[project.value].push(toDoManager.createToDo(title.value, description.value, date.value, prioritySet, project.value, complete.checked));
-                    toDoManager.deleteToDo(toDoList, toDoList[item]);
-                }
-                else {
-                    toDoManager.editToDo(toDoList[item], title.value, description.value, date.value, prioritySet, project.value, complete.checked);
-                }
-                
-                if(document.querySelector('.current-folder-title').innerHTML == 'Home'){
-                    displayAllToDos(fullList, listDisplay, images);
-                }
-                else {
-                    displayToDos(fullList, project.value, listDisplay,images, true);
-                }
-                formContainer.style.display = "none";
-                resetForm();
-                saveBtn.removeEventListener('click',handler);
             });
 
             
@@ -232,9 +238,11 @@ export const domManager = (function () {
     }
     function changeCheckBox(e, complete,images) {
         e.target.src = (complete) ? images['checkbox-white.png'] : images['blank-square.png'];
-
     }
    
+    function showError() {
+        console.log("show error");
+    }
 
     return {
         displayToDos,
@@ -243,6 +251,7 @@ export const domManager = (function () {
         displayNav,
         fillSelectProject,
         getCurrentProject,
-        setCurrentProject
+        setCurrentProject,
+        showError,
     }
 })();
